@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+
+<html> 
+
+<head> 
+
+  <title>Laptop Store</title> 
+
+  <%= csrf_meta_tags %> 
+
+  <%= csp_meta_tag %> 
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %> 
+  <%= javascript_include_tag "application" %>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+</head> 
+
+<body> 
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+
+    <a class="navbar-brand" href="/">Laptop Store</a> 
+    <% if logged_in? %> 
+
+    <p>Привіт, <%= current_user.name %>!</p> 
+
+      <%= button_to "Вийти", logout_path, data: { "turbo_method": :post } %> 
+
+    <% else %> 
+
+      <%= link_to "Увійти", login_path %> 
+
+      <%= link_to "Реєстрація", new_user_path %> 
+
+    <% end %> 
+
+    <div class="collapse navbar-collapse"> 
+
+      <ul class="navbar-nav mr-auto"> 
+
+
+        <li class="nav-item"><a class="nav-link" href="/products">Products</a></li> 
+
+        <li class="nav-item"><a class="nav-link" href="/carts">Cart</a></li> 
+
+      </ul> 
+
+    </div> 
+
+  </nav> 
+
+  <div class="container mt-4"> 
+
+    <%= yield %> 
+
+  </div> 
+
+</body> 
+
+</html> 

@@ -1,0 +1,42 @@
+<div class="container mt-4"> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <%= image_tag @product.image_url, class: "img-fluid", alt: @product.name if @product.image_url.present? %> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><%= @product.name %></h1> 
+      <p class="text-muted"><%= @product.category %></p> 
+      <p><%= @product.description %></p> 
+      <p class="fw-bold fs-4">$<%= @product.price %></p> 
+      <p>Наявність: <%= @product.stock > 0 ? "#{@product.stock} в наявності" : "Немає в наявності" %></p> 
+      <%= form_with url: add_to_cart_carts_path, method: :post, local: true do %> 
+        <%= hidden_field_tag :product_id, @product.id %> 
+        <%= submit_tag 'Додати до кошика', class: 'btn btn-primary' %> 
+      <% end %> 
+      <%= link_to 'Назад до каталогу', products_path, class: 'btn btn-secondary' %> 
+    </div> 
+    <h2>Відгуки</h2> 
+  <% @product.reviews.each do |review| %> 
+    <div> 
+      <p><strong><%= review.user.name %></strong>: <%= review.content %> (<%= review.rating %>/5)</p> 
+    </div> 
+  <% end %>
+  
+  <% if logged_in? %> 
+    <h3>Залишити відгук</h3> 
+    <%= form_with model: [@product, @product.reviews.build], local: true do |f| %> 
+      <div class="form-group"> 
+        <%= f.label :rating, 'Оцінка (1-5)' %> 
+        <%= f.number_field :rating, in: 1..5, class: 'form-control' %> 
+      </div> 
+      <div class="form-group"> 
+        <%= f.label :content, 'Ваш відгук' %> 
+        <%= f.text_area :content, class: 'form-control' %> 
+      </div> 
+      <%= f.submit 'Надіслати', class: 'btn btn-primary' %> 
+    <% end %> 
+  <% else %> 
+    <p>Щоб залишити відгук, увійдіть у систему.</p> 
+  <% end %> 
+  </div> 
+</div> 

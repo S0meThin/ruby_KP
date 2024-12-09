@@ -1,0 +1,52 @@
+<h1>Каталог товарів</h1> 
+
+ 
+
+<%= form_with url: products_path, method: :get, local: true do |form| %> 
+
+  <div class="form-group"> 
+
+    <%= form.label :query, "Пошук товару" %> 
+
+    <%= form.text_field :query, class: "form-control", placeholder: "Введіть назву товару" %> 
+
+  </div> 
+
+  <div class="form-group"> 
+
+    <%= form.submit "Пошук", class: "btn btn-primary" %> 
+
+  </div> 
+
+<% end %> 
+
+ 
+
+<% if @products.any? %> 
+
+  <div class="product-list"> 
+
+    <% @products.each do |product| %> 
+
+      <div class="product-card"> 
+
+        <% if product.image_url.present? %>
+          <%= image_tag(product.image_url, alt: product.name) %>
+        <% else %>
+          <%= image_tag('https://ih1.redbubble.net/image.1861329650.2941/fposter,small,wall_texture,square_product,600x600.jpg', alt: product.name) %>
+        <% end %>
+        <h3><%= link_to product.name, product_path(product) %></h3> 
+
+        <p>Ціна: <%= number_to_currency(product.price, unit: "₴") %></p> 
+
+      </div> 
+
+    <% end %> 
+
+  </div> 
+
+<% else %> 
+
+  <p>Товарів не знайдено.</p> 
+
+<% end %> 

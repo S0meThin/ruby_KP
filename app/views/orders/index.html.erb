@@ -1,0 +1,25 @@
+<h1>Ваші замовлення</h1> 
+
+<% @orders.each do |order| %> 
+
+  <div class="card mb-3"> 
+
+    <div class="card-body"> 
+
+      <h5>Замовлення №<%= order.id %></h5> 
+
+      <p>Адреса: <%= order.address %></p> 
+
+      <p>Дата: <%= order.order_date.strftime('%d/%m/%Y %H:%M') %></p> 
+
+      <p> 
+
+        <%= link_to 'Деталі', order_path(order), class: 'btn btn-primary' %> 
+
+      </p> 
+
+    </div> 
+
+  </div> 
+
+<% end %> 

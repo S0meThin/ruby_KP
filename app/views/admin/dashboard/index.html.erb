@@ -1,0 +1,27 @@
+<h1>Панель Адміністратора</h1> 
+<p>Вітаємо, <%= current_user.name %>! Ви увійшли як адміністратор.</p> 
+
+<%= link_to 'Додати новий товар', new_product_path, class: 'btn btn-primary' %> 
+<h2>Список Товарів</h2> 
+<table> 
+  <thead> 
+    <tr> 
+      <th>Назва</th> 
+      <th>Ціна</th> 
+      <th>Дії</th> 
+    </tr> 
+  </thead> 
+  <tbody> 
+
+    <% @products.each do |product| %> 
+      <tr> 
+        <td><%= product.name %></td> 
+        <td><%= number_to_currency(product.price) %></td> 
+        <td> 
+          <%= link_to 'Редагувати', edit_product_path(product), class: 'btn btn-warning' %> 
+          <%= link_to 'Видалити', admin_product_path(product), method: :delete, data: { confirm: 'Ви впевнені?' }, class: 'btn btn-danger' %> 
+        </td> 
+      </tr> 
+    <% end %> 
+  </tbody> 
+</table> 

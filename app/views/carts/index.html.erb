@@ -1,0 +1,30 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Carts" %>
+
+<h1>Carts</h1>
+
+<div id="carts">
+  <% @carts.each do |cart| %>
+    <%= render cart %>
+    <p>
+      <%= link_to "Show this cart", cart %>
+    </p>
+
+    <h3>Загальна сума: <%= number_to_currency(@carts.sum { |item| item.product.price * item.quantity }) %></h3> 
+
+    <%= form_with url: checkout_path, method: :post, local: true do |f| %> 
+  
+      <div class="form-group"> 
+  
+        <%= f.label :address, 'Адреса доставки' %> 
+  
+        <%= f.text_field :address, class: 'form-control', placeholder: 'Введіть вашу адресу' %> 
+  
+      </div> 
+
+      <%= f.submit 'Купити', class: 'btn btn-success' %> 
+  
+    <% end %> 
+  <% end %>
+</div>
