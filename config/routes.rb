@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   resources :products do
     resources :reviews, only: :create
-    collection do
-      get :search
-    end
+    # collection do
+    #   get :search
+    # end
   end
 
   namespace :admin do

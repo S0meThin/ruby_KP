@@ -63,11 +63,11 @@ class ProductsController < ApplicationController
     end
   end
 
-  def search
-    if params[:query].present?
-      redirect_to products_path(query: "Something")
-    end
-  end
+  # def search
+  #   if params[:query].present?
+  #     redirect_to products_path(query: "Something")
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

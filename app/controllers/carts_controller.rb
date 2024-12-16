@@ -79,77 +79,43 @@ class CartsController < ApplicationController
  
 
   def checkout 
-
     @user = User.find_by(id: session[:user_id]) 
-
     @cart_items = Cart.where(user_id: @user.id)
-
  
-
     if @cart_items.empty? 
-
       redirect_to carts_path, alert: 'Ваш кошик порожній!' 
-
       return 
-
     end 
-
- 
 
     @cart_items.each do |cart_item| 
-
       if cart_item.product.stock < cart_item.quantity 
-
-        redirect_to carts_path, alert: "Недостатньо товарів для #{cart_item.product.name}." 
-
+        redirect_to carts_path, alert: "Недостатньо товарів для #{cart_item.product.name}."  
         return 
-
       end 
-
     end 
 
- 
-
     # Створення замовлення 
-
     @order = Order.create!( 
-
       user: @user, 
-
       address: params[:address], 
-
       order_date: Time.now 
-
     ) 
 
  
 
     @cart_items.each do |cart_item| 
-
       @order.order_items.create!( 
-
         product: cart_item.product, 
-
         quantity: cart_item.quantity 
-
       ) 
 
       # Оновлення запасів товару 
-
       cart_item.product.update!(stock: cart_item.product.stock - cart_item.quantity) 
-
     end 
 
- 
-
     # Очищення кошика 
-
     Cart.where(user_id: @user.id).destroy_all
-
- 
-
     redirect_to orders_path, notice: 'Замовлення успішно оформлено!' 
-
   end 
 
   private
